@@ -1,0 +1,65 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="{% static 'pr/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pr/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pr/css/templatemo-style.css' %}">
+</head>
+<style>
+    body{
+    background-color: #262424;
+    color: brown;
+   }
+
+</style>
+<body style="background-color: #262424;">
+   <!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-film mr-2"></i>
+                ChickBake
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-3" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="{% url 'CartDetails' %}"><i class="fa fa-shopping-cart"></i> {{item_c}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="{% url 'register' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="{% url 'hm' %}">Home</a>
+                </li>
+
+            </ul>
+            </div>
+        </div>
+    </nav>
+    <script src="{% static 'pr/js/plugins.js' %}"></script>
+    <script>
+        $(window).on("load", function() {
+            $('body').addClass('loaded');
+        });
+    </script>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

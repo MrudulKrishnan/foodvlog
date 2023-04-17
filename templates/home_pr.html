@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chick Bake</title>
+    <link rel="stylesheet" href="{% static 'pr/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pr/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pr/css/templatemo-style.css' %}">
+</head>
+<style>
+   /* Style The Dropdown Button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding: 12px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+</style>
+<body>
+    <!-- Page Loader -->
+        <div  class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="{% static 'pr/img/back.jpg' %}">
+            <form class="d-flex tm-search-form" action="{% url 'search' %}" method="get">
+                <input class="form-control tm-search-input" type="search" placeholder="Search Your Dish" name='qu' aria-label="Search">
+                <button class="btn btn-outline-success tm-search-btn" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
+            <div class="dropdown">
+              <button class="dropbtn">Category</button>
+              <div class="dropdown-content">
+                <a href="/">All</a>
+                {% for i in cate %}
+                    <a href={{i.get_url}}>{{i.name}}</a> <br>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="container-fluid tm-container-content tm-mt-60">
+            <div class="row mb-4">
+                <h2 class="col-6 tm-text-primary">
+                    Dishes
+                </h2>
+            </div>
+            {% for i in page.object_list %}
+            <div class="row tm-mb-90 tm-gallery">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                    <figure class="effect-ming tm-video-item">
+                        <a href="{{i.get_url}}"><img src="{{i.img.url}}" alt="Image" style="height:250px; width:350px" class="img-fluid"></a>
+<!--                        <figcaption class="d-flex align-items-center justify-content-center">-->
+<!--                            <h2>{{i.name}}</h2>-->
+<!--                        </figcaption>-->
+                    </figure>
+                    <h2>{{i.name}}</h2>
+                    <p>{{i.desc|truncatewords:12}}</p><br>
+                    <h6>price: {{i.price}} Rs.</h6>
+                    <h6>stock left: {{i.stock}}</h6>
+                    <div class="d-flex justify-content-between tm-text-gray">
+                        <span class="tm-text-gray-light">18 Oct 2020</span>
+                        <span>9,906 views</span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                </div>
+            </div> <!-- row -->
+            {% endfor %}
+            <div class="row tm-mb-90">
+                <div class="btn btn-warning btn-sm">
+                {% for p in page.paginator.page_range %}
+                <a href="?page={{p}}" class="btn btn-light btn-sm {% if page.number == p %} active {% endif %}">{{p}}</a>
+                {% endfor %}
+                </div>
+
+<!--                <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">-->
+<!--                    <a href="{% static 'pr/javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>-->
+<!--                    <div class="tm-paging d-flex">-->
+<!--                        <a href="{% static 'pr/javascript:void(0)' %}" class="active tm-paging-link">1</a>-->
+<!--                        <a href="{% static 'pr/javascript:void(0)' %}" class="tm-paging-link">2</a>-->
+<!--                        <a href="{% static 'pr/javascript:void(0)' %}" class="tm-paging-link">3</a>-->
+<!--                        <a href="{% static 'pr/javascript:void(0)' %}" class="tm-paging-link">4</a>-->
+<!--                    </div>-->
+<!--                    <a href="{% static 'pr/javascript:void(0)' %}" class="btn btn-primary tm-btn-next">Next Page</a>-->
+<!--                </div>-->
+            </div>
+        </div> <!-- container-fluid, tm-container-content -->
+        <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
+            <div class="container-fluid tm-container-small">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-12 px-5 mb-5">
+                        <h3 class="tm-text-primary mb-4 tm-footer-title">About Chick Bake</h3>
+                        <p>Chick Bake is free <a rel="sponsored" href="https://v5.getbootstrap.com/">Bootstrap 5</a> Alpha 2 HTML Template for video and photo websites. You can freely use this TemplateMo layout for a front-end integration with any kind of CMS website.</p>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
+                        <h3 class="tm-text-primary mb-4 tm-footer-title">Our Links</h3>
+                        <ul class="tm-footer-links pl-0">
+                            <li><a href="#">Advertise</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Our Company</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
+                        <ul class="tm-social-links d-flex justify-content-end pl-0 mb-5">
+                            <li class="mb-2"><a href="https://facebook.com"><i class="fab fa-facebook"></i></a></li>
+                            <li class="mb-2"><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
+                            <li class="mb-2"><a href="https://instagram.com"><i class="fab fa-instagram"></i></a></li>
+                            <li class="mb-2"><a href="https://pinterest.com"><i class="fab fa-pinterest"></i></a></li>
+                        </ul>
+                        <a href="#" class="tm-text-gray text-right d-block mb-2">Terms of Use</a>
+                        <a href="#" class="tm-text-gray text-right d-block">Privacy Policy</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-md-7 col-12 px-5 mb-3">
+                        Copyright 2020 Chick Bake Company. All rights reserved.
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-12 px-5 text-right">
+                        Designed by <a href="https://templatemo.com" class="tm-text-gray" rel="sponsored" target="_parent">TemplateMo</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="{% static 'pr/js/plugins.js' %}"></script>
+        <script>
+            $(window).on("load", function() {
+                $('body').addClass('loaded');
+            });
+        </script>
+    {% endblock %}
+    </body>
+</html>
